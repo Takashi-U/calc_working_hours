@@ -22,6 +22,9 @@ describe WorkingHours do
       proc { @working_hours.add_time("2:75") }.should raise_error
     end
 
+    it "2:25を加え、さらに3:00を加えると13:10になること（add_timeはチェインできること）" do
+      @working_hours.add_time("2:25").add_time("3:00").time_string.should == "13:10"
+    end
   end
 
   context "7:70（7時間70分）が労働時間だった場合" do

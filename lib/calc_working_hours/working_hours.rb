@@ -26,6 +26,7 @@ module CalcWorkingHours
         hour = @minute.div(60)
         minute = @minute % 60
         @time_string = hour.to_s + ":" + minute.to_s
+        self
       else
         raise "failure add_time (invalid time format!)"
       end
