@@ -25,6 +25,24 @@ describe WorkingHours do
     it "2:25を加え、さらに3:00を加えると13:10になること（add_timeはチェインできること）" do
       @working_hours.add_time("2:25").add_time("3:00").time_string.should == "13:10"
     end
+
+    it "1:50を引くと、5:55になること" do
+      @working_hours.minus_time("1:50").time_string.should == "5:55"
+    end
+
+    it "8:50を引くと、マイナスになるため、例外が発生すること" do
+      proc{ @working_hours.minus_time("8:50").time_string }.should raise_error
+    end
+
+    it "2:25を引き、さらに3:00を引くと2:20になること（minus_timeはチェインできること）" do
+      @working_hours.minus_time("2:25").minus_time("3:00").time_string.should == "2:20"
+    end
+
+    it '["1:10", "2:20", "3:30", "4:40"]を足すと、19:35になること' do
+      @working_hours.add_array_time(["1:10", "2:20", "3:30", "4:40"]).time_string.should == "19:25"
+    end
+      
+
   end
 
   context "7:70（7時間70分）が労働時間だった場合" do
