@@ -8,7 +8,15 @@ describe TimeCardRow do
     before do
       @time_card_row = TimeCardRow.new("9:00", "19:00", ["11:00", "12:00"], ["15:00", "16:00"])
     end
-    
+
+    it "始業時間は9:00となっている" do 
+      @time_card_row.starting_time.should == "9:00"
+    end
+
+    it "終業時間は19:00となっている" do 
+      @time_card_row.ending_time.should == "19:00"
+    end
+
 
   end
 
@@ -39,6 +47,10 @@ describe TimeCardRow do
 
     it "始業8:00、終業19:00、休憩12:00は休憩時間設定が誤っているので、エラーが発生すること" do
       proc { TimeCardRow.new("8:00", "19:00", "12:00") }.should raise_error
+    end
+
+    it "始業8:00、終業19:00、休憩7:00〜11:00は時系列が誤っているので、エラーが発生すること" do
+      proc { TimeCardRow.new("8:00", "19:00", ["7:00", "10:00"]) }.should raise_error
     end
 
   end

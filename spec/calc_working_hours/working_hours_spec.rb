@@ -38,7 +38,7 @@ describe WorkingHours do
       @working_hours.minus_time("2:25").minus_time("3:00").time_string.should == "2:20"
     end
 
-    it '["1:10", "2:20", "3:30", "4:40"]を足すと、19:35になること' do
+    it '["1:10", "2:20", "3:30", "4:40"]を足すと、19:35になること（add_array_timeは配列を渡すと合計する）' do
       @working_hours.add_array_time(["1:10", "2:20", "3:30", "4:40"]).time_string.should == "19:25"
     end
       
