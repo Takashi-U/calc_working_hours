@@ -25,6 +25,22 @@ describe TimeCardRow do
       @time_card_row.set_date("2013/8/1").date_string.class.should == String
     end
 
+    it "time_pointは9:00,11:00,12:00,15:00,16:00,19:00" do 
+      @time_card_row.time_point.should == ["9:00", "11:00", "12:00", "15:00", "16:00", "19:00"]
+    end
+
+    it "労働時間のうち、10:00〜15:30の間の労働時間は4:00" do 
+      @time_card_row.working_hours_in_range("10:00", "15:30").should == "4:00"
+    end
+
+    it "労働時間のうち、11:30〜14:00の間の労働時間は2:00" do 
+      @time_card_row.working_hours_in_range("11:00", "14:00").should == "2:00"
+    end
+
+    it "労働時間のうち、14:00〜17:00の間の労働時間は2:00" do 
+      @time_card_row.working_hours_in_range("14:00", "17:00").should == "2:00"
+    end
+
   end
 
   context "適正な時間設定と、不適な設定時間を設定したとき" do

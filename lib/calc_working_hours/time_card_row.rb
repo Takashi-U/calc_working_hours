@@ -5,7 +5,7 @@ require "date"
 module CalcWorkingHours
 
   class TimeCardRow
-    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string
+    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :working_hours_in_range
     def initialize(starting_time, ending_time, *break_time)
       unless valid_time_format?(starting_time) && valid_time_format?(ending_time)
         raise "failure initialize (invalid time format! TimeCardRow class)"
@@ -36,7 +36,15 @@ module CalcWorkingHours
       @ending_time = ending_time
       @break_time = break_time
       @working_hours = WorkingHours.new(ending_time).minus_time(starting_time).minus_time(total_break_time_string)
-
+      @time_point = []
+      @time_point << starting_time
+      unless break_time.empty?
+        break_time.each do |bt|
+          @time_point << bt[0]
+          @time_point << bt[1]
+        end
+      end
+      @time_point << ending_time
       self
     end
 
@@ -48,7 +56,35 @@ module CalcWorkingHours
       self
     end
 
+    def working_hours_in_range(start_range, end_range)
+      i = @time_point.size / 2
+      starting_time, ending_time = ""
+      array_of_working_hours = []
+      for counter in 1..i
+        counter = 2 * counter - 2
+        starting_time = @time_point[counter]
+        ending_time = @time_point[counter + 1]
+
+        if valid_range?(end_range, starting_time) || valid_range?(ending_time, start_range)
+        elsif valid_range?(start_range, starting_time) && valid_range?(end_range, ending_time)
+          array_of_working_hours << WorkingHours.new(end_range).minus_time(starting_time).time_string
+        elsif valid_range?(starting_time, start_range) && valid_range?(end_range, ending_time)
+          array_of_working_hours << WorkingHours.new(end_range).minus_time(start_range).time_string
+        elsif valid_range?(starting_time, start_range) && valid_range?(ending_time, end_range)
+          array_of_working_hours << WorkingHours.new(ending_time).minus_time(start_range).time_string
+        elsif valid_range?(start_range, starting_time) && valid_range?(ending_time, end_range)
+          array_of_working_hours << WorkingHours.new(ending_time).minus_time(starting_time).time_string
+        end
+      end
+      return @working_hours_in_range = WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
+    end
+
     private
+
+    def valid_range?(first, second)
+      false
+      true if change_to_minute(first) <= change_to_minute(second)
+    end
 
     def total_break_time(break_time)
       total = WorkingHours.new("0:00")

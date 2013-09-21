@@ -26,5 +26,9 @@ describe TimeRecorder do
       @time_recorder.time_cards["0000000084"].total_working_hours.should == "149:12"
     end
 
+    it "タイムカードのidが0000000002の人物の11:00〜16:00の労働時間は87:02であること" do 
+      @time_recorder.time_cards["0000000002"].total_working_hours_in_range("11:00", "16:00").should == "87:02"
+    end
+
   end
 end
