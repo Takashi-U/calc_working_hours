@@ -67,9 +67,12 @@ module CalcWorkingHours
     end
 
     def change_to_time_string(minute)
-      hour = minute.div(60)
-      minute = minute % 60
-      return hour.to_s + ":" + minute.to_s
+      hour = minute.div(60).to_s
+      minute = (minute % 60).to_s
+      if minute.length == 1
+        minute = "0" + minute
+      end
+      return hour + ":" + minute
     end
 
   end

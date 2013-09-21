@@ -17,6 +17,13 @@ describe TimeCardRow do
       @time_card_row.ending_time.should == "19:00"
     end
 
+    it "労働時間は8:00となっている" do 
+      @time_card_row.working_hours.time_string.should == "8:00"
+    end
+
+    it "set_dateにDateクラスのオブジェクトを渡すことで日付を設定できる" do
+      @time_card_row.set_date("2013/8/1").date_string.class.should == String
+    end
 
   end
 

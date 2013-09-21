@@ -1,8 +1,8 @@
 require "calc_working_hours/version"
-require "calc_working_hours/working_hours"
-require "calc_working_hours/time_card"
-require "calc_working_hours/time_card_row"
+require "active_support/dependencies"
 
 module CalcWorkingHours
-  # Your code goes here...
 end
+
+ActiveSupport::Dependencies.autoload_paths << File.expand_path('..', __FILE__)
+ActiveSupport::Dependencies.autoload_paths << File.expand_path('../calc_working_hours', __FILE__)

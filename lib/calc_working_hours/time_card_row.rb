@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
+require "date"
+
 module CalcWorkingHours
 
   class TimeCardRow
-    attr_reader :starting_time, :ending_time, :break_time, :working_hours
+    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string
     def initialize(starting_time, ending_time, *break_time)
       unless valid_time_format?(starting_time) && valid_time_format?(ending_time)
         raise "failure initialize (invalid time format! TimeCardRow class)"
@@ -35,6 +37,14 @@ module CalcWorkingHours
       @break_time = break_time
       @working_hours = WorkingHours.new(ending_time).minus_time(starting_time).minus_time(total_break_time_string)
 
+      self
+    end
+
+    def set_date(date)
+      unless date.class == String
+        raise "failure set_date (date should string class)! TimeCardRow class"
+      end
+      @date_string = date
       self
     end
 
