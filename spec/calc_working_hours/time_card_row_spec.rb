@@ -41,6 +41,11 @@ describe TimeCardRow do
       @time_card_row.working_hours_in_range("14:00", "17:00").should == "2:00"
     end
 
+    it "所定労働時間を7:20とすると、残業時間は0:40となる" do 
+      @time_card_row.set_fixed_working_hours("7:20").overtime.time_string.should == "0:40"
+    end
+
+
   end
 
   context "適正な時間設定と、不適な設定時間を設定したとき" do

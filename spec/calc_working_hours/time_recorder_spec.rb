@@ -4,10 +4,10 @@ require 'spec_helper'
 include CalcWorkingHours
 
 describe TimeRecorder do
-  context "data_sample.csvの通りTimeRecorderが与えられている場合" do
+  context "data_sample.csv(Shift_JIS)の通りTimeRecorderが与えられている場合" do
     before do
       path_to_csv = File.expand_path(File.dirname(__FILE__)) + "/data_sample.csv"
-      @time_recorder = TimeRecorder.new(path_to_csv, 0, 8, 14, 4, 0, [10, 12])
+      @time_recorder = TimeRecorder.new(path_to_csv, "Shift_JIS", 0, 8, 14, 4, [10, 12])
     end
 
     it "タイムカードのデータが5件あること" do 
