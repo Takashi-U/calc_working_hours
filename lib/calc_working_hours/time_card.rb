@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 module CalcWorkingHours
-  attr_reader :time_card_rows, :card_id, :working_hours, :id
+  attr_reader :time_card_rows, :card_id, :id
   class TimeCard
     def initialize(card_id, id)
       @time_card_rows = []
@@ -20,7 +20,7 @@ module CalcWorkingHours
       @time_card_rows.each do |row|
         array_of_working_hours << row.working_hours.time_string
       end
-      @working_hours = WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
+      return WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
     end
 
     def total_working_hours_in_range(start_range, end_range)
