@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = [""]
   spec.description   = %q{例えば、173:08のような表記の時間を計算するライブラリです}
   spec.summary       = %q{時間計算}
-  spec.homepage      = "http://uchibe.net"
+  spec.homepage      = "https://github.com/Takashi-U/calc_working_hours"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
