@@ -45,6 +45,10 @@ describe TimeCardRow do
       @time_card_row.set_fixed_working_hours("7:20").overtime.time_string.should == "0:40"
     end
 
+    it "所定労働時間を8:20とすると、残業時間は0:00となる" do 
+      @time_card_row.set_fixed_working_hours("8:20").overtime.time_string.should == "0:00"
+    end
+
 
   end
 
