@@ -21,8 +21,12 @@ describe TimeCardRow do
       @time_card_row.working_hours.time_string.should == "8:00"
     end
 
-    it "set_dateにDateクラスのオブジェクトを渡すことで日付を設定できる" do
+    it "set_dateに日付（任意の文字列）を設定できる" do
       @time_card_row.set_date("2013/8/1").date_string.class.should == String
+    end
+
+    it "set_dateにString以外を設定すると例外が発生する" do
+      proc { @time_card_row.set_date(Date.new(2013,8,1)) }.should raise_error
     end
 
     it "time_pointは9:00,11:00,12:00,15:00,16:00,19:00" do 
