@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 module CalcWorkingHours
-  attr_reader :time_card_rows, :card_id, :working_hours
+  attr_reader :time_card_rows, :card_id, :working_hours, :id
   class TimeCard
-    def initialize(card_id)
+    def initialize(card_id, id)
       @time_card_rows = []
       @card_id = card_id
+      @id = id
       self
     end
 

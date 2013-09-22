@@ -5,7 +5,7 @@ require "date"
 module CalcWorkingHours
 
   class TimeCardRow
-    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :working_hours_in_range, :overtime
+    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :working_hours_in_range, :overtime, :id
     def initialize(starting_time, ending_time, *break_time)
       unless valid_time_format?(starting_time) && valid_time_format?(ending_time)
         raise "failure initialize (invalid time format! TimeCardRow class)"
