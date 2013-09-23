@@ -53,8 +53,18 @@ describe TimeCardRow do
       @time_card_row.set_fixed_working_hours("8:20").overtime.time_string.should == "0:00"
     end
 
-
   end
+
+  context "始業11:30、終業23:34、休憩15:38〜17:14のとき" do
+    before do
+      @time_card_row = TimeCardRow.new("11:30", "23:34", ["15:38", "17:14"])
+    end
+
+    it "所定労働時間を8:00とすると、残業時間は2:28となる" do 
+      @time_card_row.set_fixed_working_hours("8:00").overtime.time_string.should == "2:28"
+    end
+  end
+
 
   context "適正な時間設定と、不適な設定時間を設定したとき" do
     it "始業22:00、終業28:00は適正な始業・終業時間設定（0:00〜48:00）なので、エラーは発生しないこと" do

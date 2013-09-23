@@ -49,7 +49,7 @@ module CalcWorkingHours
     end
 
     def set_fixed_working_hours(time)
-      if @working_hours.time_string < time
+      if @working_hours.minute < WorkingHours.new(time).minute
         @overtime = @working_hours.minus_time(@working_hours.time_string)
       else
         @overtime = @working_hours.minus_time(time)
