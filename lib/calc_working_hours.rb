@@ -1,3 +1,4 @@
+require "calc_working_hours/calc_helper"
 require "calc_working_hours/time_card"
 require "calc_working_hours/time_card_row"
 require "calc_working_hours/time_recorder"

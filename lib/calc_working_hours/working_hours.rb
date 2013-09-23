@@ -5,7 +5,7 @@ module CalcWorkingHours
   class WorkingHours
     attr_reader :time_string, :minute
     def initialize(str)
-      if valid_time_format?(str)
+      if CalcHelper.valid_working_hours_format?(str)
         @time_string = str
         self.to_minute
         self
@@ -15,13 +15,13 @@ module CalcWorkingHours
     end
 
     def to_minute
-      @minute = change_to_minute(@time_string)
+      @minute = CalcHelper.change_to_minute(@time_string)
     end
 
     def add_time(str)
-      if valid_time_format?(str)
-        @minute = @minute + change_to_minute(str)
-        @time_string = change_to_time_string(@minute)
+      if CalcHelper.valid_working_hours_format?(str)
+        @minute = @minute + CalcHelper.change_to_minute(str)
+        @time_string = CalcHelper.change_to_time_string(@minute)
         self
       else
         raise "failure add_time (invalid time format!)"
@@ -36,43 +36,16 @@ module CalcWorkingHours
     end
 
     def minus_time(str)
-      if valid_time_format?(str)
-        minute = @minute - change_to_minute(str)
+      if CalcHelper.valid_working_hours_format?(str)
+        minute = @minute - CalcHelper.change_to_minute(str)
         if minute >= 0
           @minute = minute
-          @time_string = change_to_time_string(@minute)
+          @time_string = CalcHelper.change_to_time_string(@minute)
           self
         else 
           raise "failure add_time (invalid time format!)"
         end
       end
-    end
-
-    private
-    def valid_time_format?(str)
-      flag = false
-      if str.class == String
-        if /\d+:(\d+)/ =~ str
-          if $1.to_i < 60 && $1.to_i >= 0
-            flag = true
-          end
-        end
-      end
-      return flag
-    end
-
-    def change_to_minute(str)
-      /(\d+):(\d+)/ =~ str
-      return $1.to_i * 60 + $2.to_i
-    end
-
-    def change_to_time_string(minute)
-      hour = minute.div(60).to_s
-      minute = (minute % 60).to_s
-      if minute.length == 1
-        minute = "0" + minute
-      end
-      return hour + ":" + minute
     end
 
   end
