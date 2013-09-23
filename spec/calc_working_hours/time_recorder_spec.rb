@@ -7,7 +7,7 @@ describe TimeRecorder do
   context "data_sample.csv(Shift_JIS)の通りTimeRecorderが与えられている場合" do
     before do
       path_to_csv = File.expand_path(File.dirname(__FILE__)) + "/data_sample.csv"
-      @time_recorder = TimeRecorder.new(path_to_csv, "Shift_JIS", "従業員番号", "カード番号", "出勤打刻", "退勤打刻", "年/月/日", ["外出打刻", "戻打刻"])
+      @time_recorder = TimeRecorder.new(path_to_csv, "Shift_JIS", "従業員番号", "カード番号", "年/月/日", "出勤打刻", "退勤打刻", ["外出打刻", "戻打刻"])
     end
 
     it "タイムカードのデータが5件あること" do 

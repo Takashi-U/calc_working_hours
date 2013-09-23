@@ -6,7 +6,11 @@ module CalcWorkingHours
 
   class TimeCardRow
     attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :working_hours_in_range, :overtime, :id
-    def initialize(starting_time, ending_time, *break_time)
+    def initialize(date_string, starting_time, ending_time, *break_time)
+      unless date_string.class == String
+        raise "failure set_date (date should string class)! TimeCardRow class"
+      end
+
       unless CalcHelper.valid_time_format?(starting_time) && CalcHelper.valid_time_format?(ending_time)
         raise "failure initialize (invalid time format! TimeCardRow class)"
       end
@@ -31,7 +35,7 @@ module CalcWorkingHours
       unless break_time.empty?
         total_break_time_string = CalcHelper.total_break_time(break_time).time_string
       end
-
+      @date_string = date_string
       @starting_time = starting_time
       @ending_time = ending_time
       @break_time = break_time
@@ -56,14 +60,6 @@ module CalcWorkingHours
       else
         @overtime = working_hours.minus_time(time.time_string)
       end
-      self
-    end
-
-    def set_date(date)
-      unless date.class == String
-        raise "failure set_date (date should string class)! TimeCardRow class"
-      end
-      @date_string = date
       self
     end
 
