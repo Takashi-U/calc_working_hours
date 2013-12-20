@@ -40,6 +40,7 @@ module CalcWorkingHours
       @ending_time = ending_time
       @break_time = break_time
       @working_hours = WorkingHours.new(ending_time).minus_time(starting_time).minus_time(total_break_time_string)
+      @over_time = WorkingHours.new("0:00") if @over_time == nil
       @time_point = []
       @time_point << starting_time
       unless break_time.empty?
@@ -60,7 +61,6 @@ module CalcWorkingHours
       else
         @over_time = working_hours.minus_time(time.time_string)
       end
-      @over_time = WorkingHours.new("0:00") if @over_time == nil
       self
     end
 
