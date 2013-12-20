@@ -57,6 +57,15 @@ describe TimeCardRow do
     end
   end
 
+  context "始業9:00、終業18:00、休憩9:00〜18:00のとき" do
+    before do
+      @time_card_row = TimeCardRow.new("2013/5/12", "9:00", "18:00", ["9:00", "18:00"])
+    end
+
+    it "労働時間は0:00となる" do 
+      @time_card_row.working_hours.time_string.should == "0:00"
+    end
+  end
 
   context "適正な時間設定と、不適な設定時間を設定したとき" do
     it "set_dateにString以外を設定すると例外が発生する" do

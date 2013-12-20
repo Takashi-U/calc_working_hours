@@ -30,6 +30,10 @@ describe WorkingHours do
       @working_hours.minus_time("1:50").time_string.should == "5:55"
     end
 
+    it "7:45を引くと、0:00になること" do 
+      @working_hours.minus_time("7:45").time_string.should == "0:00"
+    end
+
     it "8:50を引くと、マイナスになるため、例外が発生すること" do
       proc{ @working_hours.minus_time("8:50").time_string }.should raise_error
     end

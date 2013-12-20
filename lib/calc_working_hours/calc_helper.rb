@@ -44,7 +44,7 @@ module CalcWorkingHours
           if time.length == 2 && time.class == Array
             if valid_time_format?(time[0]) && valid_time_format?(time[1])
               time.each do |t|
-                if change_to_minute(starting_time) >= change_to_minute(t) || change_to_minute(ending_time) <= change_to_minute(t)
+                if change_to_minute(starting_time) > change_to_minute(t) || change_to_minute(ending_time) < change_to_minute(t)
                   return flag = false 
                 end
               end
