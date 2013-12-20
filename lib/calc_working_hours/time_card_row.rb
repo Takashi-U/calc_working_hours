@@ -60,6 +60,7 @@ module CalcWorkingHours
       else
         @over_time = working_hours.minus_time(time.time_string)
       end
+      @over_time = WorkingHours.new("0:00") if @over_time == nil
       self
     end
 
