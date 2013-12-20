@@ -38,11 +38,11 @@ describe TimeCardRow do
     end
 
     it "所定労働時間を7:20とすると、残業時間は0:40となる" do 
-      @time_card_row.set_fixed_working_hours("7:20").overtime.time_string.should == "0:40"
+      @time_card_row.set_fixed_working_hours("7:20").over_time.time_string.should == "0:40"
     end
 
     it "所定労働時間を8:20とすると、残業時間は0:00となる" do 
-      @time_card_row.set_fixed_working_hours("8:20").overtime.time_string.should == "0:00"
+      @time_card_row.set_fixed_working_hours("8:20").over_time.time_string.should == "0:00"
     end
 
   end
@@ -53,7 +53,7 @@ describe TimeCardRow do
     end
 
     it "所定労働時間を8:00とすると、残業時間は2:28となる" do 
-      @time_card_row.set_fixed_working_hours("8:00").overtime.time_string.should == "2:28"
+      @time_card_row.set_fixed_working_hours("8:00").over_time.time_string.should == "2:28"
     end
   end
 

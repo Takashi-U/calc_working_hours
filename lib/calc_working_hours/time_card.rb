@@ -24,6 +24,14 @@ module CalcWorkingHours
       return WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
     end
 
+    def total_over_time
+      array_of_over_time = []
+      @time_card_rows.each do |row|
+        array_of_over_time << row.over_time.time_string
+      end
+      return WorkingHours.new("0:00").add_array_time(array_of_over_time).time_string      
+    end
+
     def total_working_hours_in_range(start_range, end_range)
       array_of_working_hours_in_range = []
       if start_range == true && end_range == true
