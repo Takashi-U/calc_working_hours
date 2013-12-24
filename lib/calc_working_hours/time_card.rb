@@ -45,5 +45,9 @@ module CalcWorkingHours
       return WorkingHours.new("0:00").add_array_time(array_of_working_hours_in_range).time_string
     end
 
+    def total_night_time 
+      self.total_working_hours_in_range("22:00", "29:00")
+    end
+
   end
 end
