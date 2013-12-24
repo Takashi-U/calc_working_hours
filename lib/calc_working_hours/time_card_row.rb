@@ -5,7 +5,7 @@ require "date"
 module CalcWorkingHours
 
   class TimeCardRow
-    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :working_hours_in_range, :over_time, :id
+    attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :over_time, :id
     def initialize(date_string, starting_time, ending_time, *break_time)
       unless date_string.class == String
         raise "failure set_date (date should string class)! TimeCardRow class"
@@ -84,7 +84,12 @@ module CalcWorkingHours
           array_of_working_hours << WorkingHours.new(ending_time).minus_time(starting_time).time_string
         end
       end
-      return @working_hours_in_range = WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
+      return WorkingHours.new("0:00").add_array_time(array_of_working_hours).time_string
     end
+
+    def between_10pm_and_5am
+      self.working_hours_in_range("22:00", "29:00")
+    end
+
   end
 end

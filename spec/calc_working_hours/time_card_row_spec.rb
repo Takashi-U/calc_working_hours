@@ -44,7 +44,6 @@ describe TimeCardRow do
     it "所定労働時間を8:20とすると、残業時間は0:00となる" do 
       @time_card_row.set_fixed_working_hours("8:20").over_time.time_string.should == "0:00"
     end
-
   end
 
   context "始業11:30、終業23:34、休憩15:38〜17:14のとき" do
@@ -103,7 +102,18 @@ describe TimeCardRow do
     it "始業8:00、終業19:00、休憩7:00〜11:00は時系列が誤っているので、エラーが発生すること" do
       proc { TimeCardRow.new("2013/5/12", "8:00", "19:00", ["7:00", "10:00"]) }.should raise_error
     end
+  end
 
+  context "始業20:00、終業25:00のとき" do
+    it "深夜勤務時間は3:00となる" do
+      TimeCardRow.new("2013/5/12", "20:00", "25:00").between_10pm_and_5am.should == "3:00"
+    end
+  end
+
+  context "始業20:00、終業25:00、休憩23:00〜24:00のとき" do
+    it "深夜勤務時間は4:00となる" do
+      TimeCardRow.new("2013/5/12", "20:00", "25:00", ["23:00", "24:00"]).between_10pm_and_5am.should == "2:00"
+    end
   end
 
 end
