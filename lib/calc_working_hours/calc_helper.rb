@@ -62,8 +62,8 @@ module CalcWorkingHours
 
       def total_break_time(break_time)
         total = WorkingHours.new("0:00")
-        break_time.each do |time|
-          unless time
+        unless break_time.empty?
+          break_time.each do |time|
             total.add_time(time[1]).minus_time(time[0])
           end
         end
