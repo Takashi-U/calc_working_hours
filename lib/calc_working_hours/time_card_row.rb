@@ -13,6 +13,17 @@ module CalcWorkingHours
           et = WorkingHours.new(ending_time)
           ending_time = et.add_time("24:00").time_string
         end
+        unless break_time.empty?
+          break_time.map! do |time|
+            unless CalcHelper.valid_time_order?(time[0], time[1])
+              et = WorkingHours.new(time[1])
+              time[1] = et.add_time("24:00").time_string
+              [time[0], time[1]]
+            else
+              [time[0], time[1]]
+            end
+          end
+        end
       end
 
       unless date_string.class == String
