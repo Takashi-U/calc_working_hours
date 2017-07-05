@@ -11,7 +11,7 @@ module CalcWorkingHours
       if auto_correction
         unless CalcHelper.valid_time_order?(starting_time, ending_time)
           et = WorkingHours.new(ending_time)
-          ending_time = et.add_time("24:00")
+          ending_time = et.add_time("24:00").time_string
         end
       end
 
