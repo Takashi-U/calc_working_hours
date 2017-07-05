@@ -6,7 +6,15 @@ module CalcWorkingHours
 
   class TimeCardRow
     attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :over_time, :id
-    def initialize(date_string, starting_time, ending_time, *break_time)
+    def initialize(date_string, starting_time, ending_time, auto_correction, *break_time)
+
+      if auto_correction
+        unless CalcHelper.valid_time_order?(starting_time, ending_time)
+          et = WorkingHours.new(ending_time)
+          ending_time = et.add_time("24:00")
+        end
+      end
+
       unless date_string.class == String
         raise "failure set_date (date should string class)! TimeCardRow class"
       end
@@ -24,7 +32,7 @@ module CalcWorkingHours
           raise "failure initialize (invalid break time! TimeCardRow class)"
         end
       end
-      
+
       break_time.each do |time|
         unless CalcHelper.valid_time_order?(time[0], time[1])
           raise "failure initialize (invalid time order(break time)! TimeCardRow class)"
