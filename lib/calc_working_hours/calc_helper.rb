@@ -41,6 +41,9 @@ module CalcWorkingHours
       def valid_break_time?(break_time, starting_time, ending_time)
         flag = false
         break_time.each do |time|
+          unless time
+            return flag = true
+          end
           if time.length == 2 && time.class == Array
             if valid_time_format?(time[0]) && valid_time_format?(time[1])
               time.each do |t|
@@ -60,7 +63,9 @@ module CalcWorkingHours
       def total_break_time(break_time)
         total = WorkingHours.new("0:00")
         break_time.each do |time|
-          total.add_time(time[1]).minus_time(time[0])
+          unless time
+            total.add_time(time[1]).minus_time(time[0])
+          end
         end
         return total
       end
