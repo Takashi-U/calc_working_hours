@@ -7,14 +7,22 @@ module CalcWorkingHours
   class TimeCardRow
     attr_reader :starting_time, :ending_time, :break_time, :working_hours, :date_string, :time_point, :over_time, :id
     def initialize(date_string, starting_time, ending_time, auto_correction, *break_time)
-
       if auto_correction
+        if starting_time == nil || ending_time == nil
+          starting_time = "0:00"
+          ending_time = "0:00"
+        end
         unless CalcHelper.valid_time_order?(starting_time, ending_time)
           et = WorkingHours.new(ending_time)
           ending_time = et.add_time("24:00").time_string
         end
         unless break_time.empty?
           break_time.map! do |time|
+            if starting_time == nil || ending_time == nil
+              starting_time = "0:00"
+              ending_time = "0:00"
+              time = ["0:00", "0:00"]
+            end
             unless CalcHelper.valid_time_order?(starting_time, time[0])
               et = WorkingHours.new(time[0])
               time[0] = et.add_time("24:00").time_string
