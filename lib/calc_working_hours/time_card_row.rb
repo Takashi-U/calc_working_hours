@@ -15,13 +15,15 @@ module CalcWorkingHours
         end
         unless break_time.empty?
           break_time.map! do |time|
-            unless CalcHelper.valid_time_order?(time[0], time[1])
+            unless CalcHelper.valid_time_order?(starting_time, time[0])
+              et = WorkingHours.new(time[0])
+              time[0] = et.add_time("24:00").time_string
+            end
+            unless CalcHelper.valid_time_order?(starting_time, time[1])
               et = WorkingHours.new(time[1])
               time[1] = et.add_time("24:00").time_string
-              [time[0], time[1]]
-            else
-              [time[0], time[1]]
             end
+            [time[0], time[1]]
           end
         end
       end
